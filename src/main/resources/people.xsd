@@ -1,0 +1,103 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://localhost:8080"
+           targetNamespace="http://localhost:8080" elementFormDefault="qualified">
+
+    <xs:element name="GetUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Snils" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="User" type="tns:information"/>
+                <xs:element name="MessageError" type="tns:error"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="information">
+        <xs:sequence>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="Surname" type="xs:string"/>
+            <xs:element name="City" type="xs:string"/>
+            <xs:element name="Snils" type="xs:int" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="error">
+        <xs:sequence>
+            <xs:element name="Error" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="CreateUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <!--xs:element name="creatpeople" type="tns:creatuser"/-->
+                <xs:element name="Name" type="xs:string"/>
+                <xs:element name="Surname" type="xs:string"/>
+                <xs:element name="City" type="xs:string"/>
+                <xs:element name="Snils" type="xs:int" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+
+    <xs:element name="CreateUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Value" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UpdateUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Name" type="xs:string"/>
+                <xs:element name="Surname" type="xs:string"/>
+                <xs:element name="City" type="xs:string"/>
+                <xs:element name="Snils" type="xs:int" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UpdateUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Value" type="tns:information"/>
+                <xs:element name="MessageError" type="tns:error"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Snils" type="xs:int" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Value" type="xs:string"/>
+                <xs:element name="MessageError" type="tns:error"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAllPeopleRequest">
+        <xs:complexType>
+        </xs:complexType>
+    </xs:element>
+
+
+
+
+</xs:schema>
