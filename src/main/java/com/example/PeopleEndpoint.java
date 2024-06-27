@@ -3,11 +3,15 @@ package com.example;
 
 import com.data.Repository;
 
+//import com.kafka.KafkaListenerExample;
+import com.kafka.KafkaSender;
+import com.kafka.User;
 import jakarta.xml.soap.*;
 
 import localhost._8080.*;
 
 import localhost._8080.Error;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.context.MessageContext;
@@ -27,21 +31,25 @@ public class PeopleEndpoint extends MessageDispatcherServlet  {
 	private Repository model;
 	public Information information;
 	int value;
+	KafkaSender kafkaSender;
+	//KafkaListenerExample kafkaListenerExample;
 
 	@Autowired
-	public PeopleEndpoint(Repository model, Information information
+
+	public PeopleEndpoint(Repository model, Information information, KafkaSender kafkaSender
 						  ) throws Exception {
 		this.model=model;
 		this.information=information;
+		this.kafkaSender=kafkaSender;
+
 
 	}
 
 
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetUserRequest")
 	@ResponsePayload
-	public GetUserResponse getCountry(@RequestPayload GetUserRequest request) throws IOException {
+	public GetUserResponse getCountry(@RequestPayload GetUserRequest request) throws IOException, JSONException {
 		GetUserResponse response = new GetUserResponse();
-
 		Error er = new Error();
 		er.setError("Пользователь не найден");
 		if (model.getID(request.getSnils())!=0){
@@ -63,6 +71,14 @@ public class PeopleEndpoint extends MessageDispatcherServlet  {
 
 		value = model.save(request.getName(),request.getSurname(),request.getCity(),request.getSnils());
 		if(value!=0) {
+			//Отправка сообщения в топик
+			User user = new User();
+			user.setName(request.getName());
+			user.setSurname(request.getSurname());
+			user.setCity(request.getCity());
+			user.setSnils(request.getSnils());
+			kafkaSender.sendMessage("mytopic",1,user,"test");
+
 			response.setValue("Пользователь зарегистрирован");
 		}
 		return response;

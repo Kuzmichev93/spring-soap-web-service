@@ -1,11 +1,11 @@
-package com.example;
+package consumer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("com") //to scan packages mentioned
+@ComponentScan("src/main/kafkaconsumer/consumer") //to scan packages mentioned
 public class Main {
 
     public static void main(String[] args) {
